@@ -1,8 +1,8 @@
 import bcrypyjs from "bcryptjs";
 import User from "@/models/userModel";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export const POST = async (req: NextResponse) => {
+export const POST = async (req: NextRequest) => {
   try {
     const { password, token } = await req.json();
     const user = await User.findOne({

@@ -1,10 +1,10 @@
 import User from "@/models/userModel";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { connect } from "@/db/dbConfig";
 
 connect();
 
-export const POST = async (req: NextResponse) => {
+export const POST = async (req: NextRequest) => {
   try {
     const reqBody = await req.json();
     const { token } = reqBody;

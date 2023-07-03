@@ -1,12 +1,11 @@
-import bcrypyjs from "bcryptjs";
 import { connect } from "@/db/dbConfig";
 import User from "@/models/userModel";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { sendMail } from "@/helpers/mailer";
 
 connect();
 
-export const POST = async (req: NextResponse) => {
+export const POST = async (req: NextRequest) => {
   try {
     const { email } = await req.json();
     const user = await User.findOne({ email });
@@ -14,11 +13,6 @@ export const POST = async (req: NextResponse) => {
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
-
-    // const hashedToken = bcrypyjs.hashSync(user._id.toString(), 10);
-
-    // user.forgotPasswordToken = hashedToken;
-    // user.forgotPasswordTokenExpiry = Date.now() + 3600000;
 
     console.log("forgot", user);
 
