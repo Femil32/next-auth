@@ -1,10 +1,10 @@
-import { connect } from "@/db/dbConfig";
 import bcrypyjs from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/userModel";
 import jwt from "jsonwebtoken";
+import { connect } from "@/db/dbConfig";
 
-// connect();
+connect();
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -23,6 +23,14 @@ export const POST = async (req: NextRequest) => {
     if (!isMatch) {
       return NextResponse.json({ error: "Invalid Password." }, { status: 400 });
     }
+
+    if (!user.isVerified) {
+      return NextResponse.json(
+        { error: "Please verify your email." },
+        { status: 400 }
+      );
+    }
+
     const token = await jwt.sign(
       { id: user._id, email: user.email, username: user.username },
       process.env.JWT_SECRET!,

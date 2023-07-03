@@ -31,7 +31,7 @@ const LoginPage: FC<pageProps> = ({}) => {
       const res = await axios.post("/api/auth/login", user);
       if (res.data.success) {
         toast.success(res.data.message);
-        router.push("/profile");
+        router.push("/user/profile");
       } else {
         alert(res.data.message);
       }
@@ -72,7 +72,8 @@ const LoginPage: FC<pageProps> = ({}) => {
       >
         Login
       </button>
-      <Link href="/signup">Visit Signup page</Link>
+      <Link href="/auth/signup">Visit Signup page</Link>
+      <Link href="/auth/forgot-password">Visit Forgot Password</Link>
     </div>
   );
 };

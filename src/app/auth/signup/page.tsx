@@ -35,7 +35,7 @@ const SignupPage: FC<pageProps> = ({}) => {
     const res = await axios.post("/api/auth/signup", user);
     if (res.data.success) {
       toast.success(res.data.message);
-      router.push("/login");
+      router.push("/auth/login");
     } else {
       alert(res.data.message);
     }
@@ -81,7 +81,7 @@ const SignupPage: FC<pageProps> = ({}) => {
       >
         {buttonDisabled ? "No signup" : "Signup"}
       </button>
-      <Link href="/login">Visit login page</Link>
+      <Link href="/auth/login">Visit login page</Link>
     </div>
   );
 };
