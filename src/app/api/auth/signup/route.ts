@@ -1,7 +1,10 @@
-import { connect } from "@/db/dbConfig";
 import bcrypyjs from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/userModel";
+import { sendMail } from "@/helpers/mailer";
+import { connect } from "@/db/dbConfig";
+
+connect();
 
 // connect();
 
@@ -26,9 +29,20 @@ export const POST = async (req: NextRequest) => {
       password: hashedPassword,
     }).save();
 
+    if (!newUser) {
+      return NextResponse.json({ error: "User not created" }, { status: 500 });
+    }
+
+    const aa = await sendMail({
+      email,
+      emailType: "VERIFY",
+      userId: newUser._id,
+    });
+    console.log(aa);
+
     return NextResponse.json(
       {
-        message: "User created successfully",
+        message: "Please verify your email.",
         user: newUser,
         success: true,
       },

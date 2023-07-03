@@ -25,7 +25,7 @@ const Profilepage: FC<pageProps> = ({}) => {
       const res = await axios.get("/api/auth/logout");
       if (res.data.success) {
         toast.success(res.data.message);
-        router.push("/login");
+        router.push("/auth/login");
       }
     } catch (err: any) {
       toast.error(err.response.data.error);
@@ -52,7 +52,7 @@ const Profilepage: FC<pageProps> = ({}) => {
         {!user ? (
           "Nothing"
         ) : (
-          <Link href={`/profile/${user._id}`}>
+          <Link href={`/user/profile/${user._id}`}>
             <span>{user.username}</span>
           </Link>
         )}
